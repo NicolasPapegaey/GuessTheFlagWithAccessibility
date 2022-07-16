@@ -11,6 +11,8 @@
 		B3E4D6CC283F760700D92659 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E4D6CB283F760700D92659 /* ContentView.swift */; };
 		B3E4D6CE283F760900D92659 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B3E4D6CD283F760900D92659 /* Assets.xcassets */; };
 		B3E4D6D1283F760900D92659 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B3E4D6D0283F760900D92659 /* Preview Assets.xcassets */; };
+		B3E84D512882C12E00E8D2B3 /* FlagImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E84D502882C12E00E8D2B3 /* FlagImage.swift */; };
+		B3E84D532882C1C000E8D2B3 /* ContentView-ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E84D522882C1C000E8D2B3 /* ContentView-ViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +21,8 @@
 		B3E4D6CB283F760700D92659 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		B3E4D6CD283F760900D92659 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B3E4D6D0283F760900D92659 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		B3E84D502882C12E00E8D2B3 /* FlagImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlagImage.swift; sourceTree = "<group>"; };
+		B3E84D522882C1C000E8D2B3 /* ContentView-ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContentView-ViewModel.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,8 +55,10 @@
 		B3E4D6C8283F760700D92659 /* GuessTheFlag */ = {
 			isa = PBXGroup;
 			children = (
+				B3E84D502882C12E00E8D2B3 /* FlagImage.swift */,
 				B3E4D6C9283F760700D92659 /* GuessTheFlagApp.swift */,
 				B3E4D6CB283F760700D92659 /* ContentView.swift */,
+				B3E84D522882C1C000E8D2B3 /* ContentView-ViewModel.swift */,
 				B3E4D6CD283F760900D92659 /* Assets.xcassets */,
 				B3E4D6CF283F760900D92659 /* Preview Content */,
 			);
@@ -138,6 +144,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				B3E4D6CC283F760700D92659 /* ContentView.swift in Sources */,
+				B3E84D532882C1C000E8D2B3 /* ContentView-ViewModel.swift in Sources */,
+				B3E84D512882C12E00E8D2B3 /* FlagImage.swift in Sources */,
 				B3E4D6CA283F760700D92659 /* GuessTheFlagApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

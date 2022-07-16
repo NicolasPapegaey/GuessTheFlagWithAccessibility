@@ -8,19 +8,12 @@
 import SwiftUI
 
 struct ContentView: View {
+    @StateObject private var viewModel = ViewModel()
     
-    @State private var countries = ["Estonia", "France", "Germany", "Ireland", "Italy", "Nigeria", "Poland", "Russia", "Spain", "UK", "US"].shuffled()
-    @State private var correctAnswer = Int.random(in: 0...2)
-    
-    @State private var showingScore = false
-    @State private var showingGameOver = false
-    @State private var scoreTitle = ""
-    @State private var score = 0
-    @State private var numberOfQuestions = 8
-    @State private var rotationDegree = 0.0
-    @State private var selectedFlag = -1
     @State private var opacityValue = 0.2
+    @State private var rotationDegree = 0.0
     
+    // Labels for accessibility
     let labels = [
         "Estonia": "Flag with three horizontal stripes of equal size. Top stripe blue, middle stripe black, bottom stripe white",
         "France": "Flag with three vertical stripes of equal size. Left stripe blue, middle stripe white, right stripe red",
@@ -37,8 +30,6 @@ struct ContentView: View {
     
     var body: some View {
         ZStack {
-//            LinearGradient(colors: [.blue, .black], startPoint: .top, endPoint: .bottom)
-//                .ignoresSafeArea()
             RadialGradient(stops: [
                 .init(color: Color(red: 0.1, green: 0.2, blue: 0.45), location: 0.3),
                 .init(color: Color(red: 0.76, green: 0.15, blue: 0.26), location: 0.3),
@@ -52,15 +43,15 @@ struct ContentView: View {
                         Text("Tap the flag of")
                             .font(.subheadline.weight(.heavy))
                             .foregroundStyle(.secondary)
-                        Text(countries[correctAnswer])
+                        Text(viewModel.countries[viewModel.correctAnswer])
                             .font(.largeTitle.weight(.semibold))
                     }
                     
                     ForEach(0..<3) { number in
                         Button {
-                            flagTapped(number)
-                            selectedFlag = number
-                            if number == correctAnswer {
+                            viewModel.flagTapped(number)
+                            viewModel.selectedFlag = number
+                            if number == viewModel.correctAnswer {
                                 withAnimation {
                                     rotationDegree += 360
                                 }
@@ -70,11 +61,11 @@ struct ContentView: View {
                                 }
                             }
                         } label: {
-                            FlagImage(country: countries[number])
-                                .rotationEffect(Angle(degrees: number == selectedFlag ? rotationDegree : 0))
-                                .opacity((selectedFlag != -1 && selectedFlag != number) ? opacityValue : 1)
-                                .scaleEffect((selectedFlag != -1 && selectedFlag != number) ? opacityValue : 1)
-                                .accessibilityLabel(labels[countries[number], default: "Unknown flag"])
+                            FlagImage(country: viewModel.countries[number])
+                                .rotationEffect(Angle(degrees: number == viewModel.selectedFlag ? rotationDegree : 0))
+                                .opacity((viewModel.selectedFlag != -1 && viewModel.selectedFlag != number) ? opacityValue : 1)
+                                .scaleEffect((viewModel.selectedFlag != -1 && viewModel.selectedFlag != number) ? opacityValue : 1)
+                                .accessibilityLabel(labels[viewModel.countries[number], default: "Unknown flag"])
                         }
                     }
                 }
@@ -84,64 +75,26 @@ struct ContentView: View {
                 .clipShape(RoundedRectangle(cornerRadius: 20))
                 Spacer()
                 Spacer()
-                Text("Score: \(score)")
+                Text("Score: \(viewModel.score)")
                     .foregroundColor(.white)
                     .font(.title.bold())
                 Spacer()
             }
             .padding()
         }
-        .alert(scoreTitle, isPresented: $showingScore) {
-            Button("Continue", action: askQuestion)
+        .alert(viewModel.scoreTitle, isPresented: $viewModel.showingScore) {
+            Button("Continue", action: viewModel.askQuestion)
         } message: {
-            Text("Your score is \(score)")
+            Text("Your score is \(viewModel.score)")
         }
-        .alert(scoreTitle, isPresented: $showingGameOver) {
-            Button("Play again", action: restartGame)
+        .alert(viewModel.scoreTitle, isPresented: $viewModel.showingGameOver) {
+            Button("Play again", action: viewModel.restartGame)
         } message: {
-            Text("Your final score is \(score)")
+            Text("Your final score is \(viewModel.score)")
         }
     }
     
-    func flagTapped(_ number: Int) {
-        if number == correctAnswer {
-            scoreTitle = "Correct"
-            score += 1
-        } else {
-            scoreTitle = "Wrong! That's the flag of \(countries[number])"
-            score -= 1
-        }
-        numberOfQuestions -= 1
-        if numberOfQuestions == 0 {
-            showingGameOver = true
-        } else {
-            showingScore = true
-        }
-    }
     
-    func askQuestion() {
-        selectedFlag = -1
-        countries.shuffle()
-        correctAnswer = Int.random(in: 0...2)
-    }
-    
-    func restartGame() {
-        askQuestion()
-        score = 0
-        numberOfQuestions = 8
-    }
-}
-
-struct FlagImage: View {
-    
-    var country: String
-    var body: some View {
-        Image(country)
-            .renderingMode(.original)
-            .clipShape(Capsule())
-            .shadow(radius: 5)
-            .scaleEffect()
-    }
 }
 
 struct LargeTitle: ViewModifier {
